@@ -5,36 +5,107 @@
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css">
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
+<script type="text/javascript" src="jquery.formatCurrency-1.4.0.js"></script>
 <style type="text/css">
-#pageone .ui-content .ui-btn.ui-btn-inline.ui-corner-all.ui-shadow {
+#pageOne .ui-content .ui-btn.ui-btn-inline.ui-corner-all.ui-shadow {
 	position: absolute;
 	right: 10px;
 	top: 20px;
-	
-    padding: 20 !important;
-    border-style: none;
-    background-color: transparent;
-    background-image: none;
+	padding: 20 !important;
+	border-style: none;
+	background-color: transparent;
+	background-image: none;
 }
+div.ui-input-text {
+	width: 120px !important;
+	
+}
+
+
 </style>
 </head>
 <body>
-
-<div data-role="page" id="pageone" >
-  <div data-role="panel" id="myPanel"> 
-    <h2>Panel Header</h2>
-    <p>You can close the panel by clicking outside the panel, pressing the Esc key or by swiping.</p>
-  </div> 
-
-  
-
-  <div data-role="main" class="ui-content" style="padding:0px">
-   <img src="images/investments-2014.jpg">
-        <a href="#myPanel" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Begin</a>
+<div data-role="page" id="pageOne" >
+  <div data-role="panel" id="myPanel" data-theme="b">
+    <h2>Menu</h2>
+    <ul data-role="listview" data-inset="true">
+      <p>
+      <li><a href="#pageStopLoss"><img src="images/unnamed.jpg">
+        <h2>Stop Loss</h2>
+        </a></li>
+    </ul>
+    </p>
   </div>
-
-   
-</div> 
+  <div data-role="main" class="ui-content" style="padding:0px"> <img src="images/investments-2014.jpg"> <a href="#myPanel" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Begin</a> </div>
+</div>
+<div data-role="page" id="pageStopLoss">
+<div data-role="content">
+  <div data-role="controlgroup" data-type="horizontal" align="center"><a href="#pageOne" data-role="button">Home</a><a href="#" data-role="button">Button</a><a href="#" data-role="button">Button</a></div>
+  <script>
+	var risk;
+	var balance;
+	var buyPrice;
+	var stopLoss;
+	var sharesToBuy;
+	var sellPrice;
+	var result;
+	$(function(){
+		$("#btnCalculate").click(function()
+		{
+			 
+			balance = $("#txtBalance").val();
+			risk = balance*0.02;
+			buyPrice = $("#txtBuyPrice").val();
+			stopLoss = $("#txtStopLoss").val();
+			sharesToBuy = risk/(buyPrice - stopLoss);
+			sellPrice = $("#txtSellPrice").val();
+			result = (sellPrice - buyPrice) * sharesToBuy
+			
+			
+			$("#lblRisk").text(risk).formatCurrency();
+			$("#txtBalance").formatCurrency();
+			$("#txtBuyPrice").formatCurrency();
+			$("#txtStopLoss").formatCurrency();
+			$("#lblSharesToBuy").text(sharesToBuy);
+			$("#txtSellPrice").formatCurrency();
+			$("#lblResult").text(result).formatCurrency();
+			 	alert(risk);
+				
+			
+		}
+			
+		
+		);
+	});
+	
+	</script>
+    <div align="center"><input type="text" id="txtBalance" placeholder="Acc Balance"/></div> 
+  <div class="ui-grid-a">
+    <div class="ui-block-a" align="right" style="padding-right:15px"> <br>
+      <label>Risk =  </label><br><br>
+      <label>Buy Price =  </label><br>
+       <label>Stop Loss =  </label><br>
+       <label>Shares to Buy =  </label><br>
+        <label>Sell Price =  </label><br>
+         <label>Result =  </label><br>
+    
+    </div>
+    <div class="ui-block-b"> <br>
+      <label id="lblRisk">$ 000,000</label>
+     <br>
+      <input type="text" id="txtBuyPrice"></label>
+      <input type="text" id="txtStopLoss"></label><br>
+      
+      <label id="lblSharesToBuy">stb</label>
+      
+      <input type="text" id="txtSellPrice"></label><br>
+      <label id="lblResult" ></label>
+      <br>
+    </div>
+  </div>
+  <button id="btnCalculate">Calculate</button>
+  
+</div>
 
 </body>
 </html>
