@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css">
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
-<script type="text/javascript" src="jquery.formatCurrency-1.4.0.js"></script>
+<script type="text/javascript" src="includes/Mavrin-maskInput-d635fb9/jquery.numberMask.js"></script>
 <style type="text/css">
 #pageOne .ui-content .ui-btn.ui-btn-inline.ui-corner-all.ui-shadow {
 	position: absolute;
@@ -18,11 +18,9 @@
 }
 div.ui-input-text {
 	width: 120px !important;
-	
 }
-
-
 </style>
+<link href="includes/jquery-4/jquery.numbox-1.1.0.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div data-role="page" id="pageOne" >
@@ -41,36 +39,26 @@ div.ui-input-text {
 <div data-role="page" id="pageStopLoss">
 <div data-role="content">
   <div data-role="controlgroup" data-type="horizontal" align="center"><a href="#pageOne" data-role="button">Home</a><a href="#" data-role="button">Button</a><a href="#" data-role="button">Button</a></div>
-  <script>
+  <script type="text/javascript">
+  $(document).ready(function(e) {
+ 
+
 	var risk;
 	var balance;
+	
 	var buyPrice;
 	var stopLoss;
 	var sharesToBuy;
 	var sellPrice;
 	var result;
-	$(function(){
+	
+	
 		$("#btnCalculate").click(function()
 		{
-			 
-			balance = $("#txtBalance").val();
-			risk = balance*0.02;
-			buyPrice = $("#txtBuyPrice").val();
-			stopLoss = $("#txtStopLoss").val();
-			sharesToBuy = risk/(buyPrice - stopLoss);
-			sellPrice = $("#txtSellPrice").val();
-			result = (sellPrice - buyPrice) * sharesToBuy
-			
-			
-			$("#lblRisk").text(risk).formatCurrency();
-			$("#txtBalance").formatCurrency();
-			$("#txtBuyPrice").formatCurrency();
-			$("#txtStopLoss").formatCurrency();
-			$("#lblSharesToBuy").text(sharesToBuy);
-			$("#txtSellPrice").formatCurrency();
-			$("#lblResult").text(result).formatCurrency();
-			 	alert(risk);
-				
+			buyPrice=$("#txtBuyPrice").text();
+		buyPrice=Number(buyPrice);
+		
+		alert (buyPrice);
 			
 		}
 			
@@ -78,34 +66,52 @@ div.ui-input-text {
 		);
 	});
 	
+$(document).ready(function(){
+  $("#txtBalance").focus(function(){
+	  $("#txtBalance").numberMask({type:'float',afterPoint:4,defaultValueInput:'0.00',decimalMark:'.'});
+    
+  });
+});
+
+	
 	</script>
-    <div align="center"><input type="text" id="txtBalance" placeholder="Acc Balance"/></div> 
+    
+  <div align="center">
+    <input type="number" id="txtBalance"  pattern="[0-9.]" placeholder="Acc Balance" name="txtBalance"/>
+  </div>
   <div class="ui-grid-a">
     <div class="ui-block-a" align="right" style="padding-right:15px"> <br>
-      <label>Risk =  </label><br><br>
-      <label>Buy Price =  </label><br>
-       <label>Stop Loss =  </label><br>
-       <label>Shares to Buy =  </label><br>
-        <label>Sell Price =  </label><br>
-         <label>Result =  </label><br>
-    
+      <label>Risk = </label>
+      <br>
+      <br>
+      <label>Buy Price = </label>
+      <br>
+      <label>Stop Loss = </label>
+      <br>
+      <label>Shares to Buy = </label>
+      <br>
+      <label>Sell Price = </label>
+      <br>
+      <label>Result = </label>
+      <br>
     </div>
     <div class="ui-block-b"> <br>
       <label id="lblRisk">$ 000,000</label>
-     <br>
-      <input type="text" id="txtBuyPrice"></label>
-      <input type="text" id="txtStopLoss"></label><br>
-      
+      <br>
+      <input type="number" id="txtBuyPrice">
+      </label>
+      <input type="number" id="txtStopLoss">
+      </label>
+      <br>
       <label id="lblSharesToBuy">stb</label>
-      
-      <input type="text" id="txtSellPrice"></label><br>
+      <input type="number" id="txtSellPrice">
+      </label>
+      <br>
       <label id="lblResult" ></label>
       <br>
     </div>
   </div>
   <button id="btnCalculate">Calculate</button>
-  
 </div>
-
 </body>
 </html>
