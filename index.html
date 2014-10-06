@@ -5,7 +5,7 @@
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
 <script type="text/javascript" src="includes/jquery-4/jquery.numbox-1.1.0.min.js"></script>
-<link href="includes/jquery-4/jquery.numbox-1.1.0.css" rel="stylesheet" type="text/css">
+
 <style type="text/css">
 #pageOne .ui-content .ui-btn.ui-btn-inline.ui-corner-all.ui-shadow {
 	position: absolute;
@@ -18,6 +18,21 @@
 }
 div.ui-input-text {
 	width: 120px !important;
+}
+.ui-grid-a .ui-block-b #lblRisk {
+	color:#900;
+	opacity:1!important;
+	width:auto
+	
+}
+.ui-grid-a .ui-block-b #lblSharesToBuy {
+	color:#900;
+	opacity:1!important;
+	width:auto
+}
+
+#txtBalance {
+	width:auto
 }
 </style>
 
@@ -38,7 +53,7 @@ div.ui-input-text {
 </div>
 <div data-role="page" id="pageStopLoss">
 <div data-role="content">
-  <div data-role="controlgroup" data-type="horizontal" align="center"><a href="#pageOne" data-role="button">Home</a><a href="#" data-role="button">Button</a><a href="#" data-role="button">Button</a></div>
+  <div data-role="controlgroup" data-type="horizontal" align="center"><a href="#pageOne" data-role="button">Home</a><a href="#" data-role="button">Button</a><a href="#" data-role="button" id="btnAccept">Accept</a></div>
   <script type="text/javascript">
   $(document).ready(function(e) {
  	
@@ -54,34 +69,67 @@ div.ui-input-text {
 	
 		$("#btnCalculate").click(function()
 		{
-		  
-
 			
-		alert (balance)
-			
+		var balanceN=$("#txtBalance").val();
+		balance = Number(balanceN.replace(/[^0-9\.]+/g,"")) *100;
+		
+		risk = (balance * 0.02)/100;
+		$("#lblRisk").text(risk);
+	
+		
+		var buyPriceN=$("#txtBuyPrice").val();
+		buyPrice=Number(buyPriceN.replace(/[^0-9\.]+/g,"")) /100;
+		
+		var stopLossN=$("#txtStopLoss").val();
+		stopLoss = Number(stopLossN.replace(/[^0-9\.]+/g,"")) /100;
+		
+		sharesToBuy = risk/(buyPrice - stopLoss);
+		$("#lblSharesToBuy").text(sharesToBuy);
+		document.getElementById("lblSharesToBuy").value=sharesToBuy;
+		
+		$("#txtBalance").NumBox();
+		document.getElementById("lblRisk").value=risk;
+		$("#lblRisk").NumBox();
+		
+		sellPriceN=$("#txtSellPrice").val();
+		sellPrice = Number(sellPriceN.replace(/[^0-9\.]+/g,"")) /100;
+		
+		result = (sellPrice-buyPrice)*sharesToBuy;
+		document.getElementById("lblResult").value=result;
+		$("#lblResult").NumBox();	
 		}
+		
 			
 		
 		);
 	});
 	
-
-  
-
-
+$("#btnAccept").click(function()
+		{
+  		
+		var newBalance=$("#txtBalance").val();
+		balance = Number(newBalance.replace(/[^0-9\.]+/g,""));
+		var newResult=$("#lblResult").val();
+		result=Number(newResult.replace(/[^0-9\.]+/g,""));
+		balance = balance + result;
+		$("#txtBalance").val(balance);
+		$("#txtBalance").NumBox();
+		
+		
+		}
+		);
 	
 	</script>
     
   <div align="center">
-    <input type="tel"  step="0.01" id="txtBalance" placeholder="Acc Balance" name="txtBalance"/>
+    <input type="tel"  id="txtBalance" placeholder="Acc Balance"  name="txtBalance"/>
   </div>
   <div class="ui-grid-a">
     <div class="ui-block-a" align="right" style="padding-right:15px"> <br>
       <label>Risk = </label>
       <br>
-      <br>
       <label>Buy Price = </label>
-      <br>
+     <br>
       <label>Stop Loss = </label>
       <br>
       <label>Shares to Buy = </label>
@@ -91,19 +139,20 @@ div.ui-input-text {
       <label>Result = </label>
       <br>
     </div>
-    <div class="ui-block-b"> <br>
-      <label id="lblRisk">$ 000,00</label>
-      <br>
+    
+    <div class="ui-block-b">
+      <button  id="lblRisk" type="button" value="" disabled = "disabled" ></button>
+   
       <input type="tel" id="txtBuyPrice">
       </label>
       <input type="tel" id="txtStopLoss">
       </label>
-      <br>
-      <label id="lblSharesToBuy">stb</label>
-      <input type="tel" id="txtSellPrice">
+     
+      <button id="lblSharesToBuy" type="button" value="" disabled="disabled"></button>
+      <input  id="txtSellPrice"></input>
       </label>
-      <br>
-      <label id="lblResult" ></label>
+      
+      <input id="lblResult" type="number" value="">
       <br>
     </div>
   </div>
