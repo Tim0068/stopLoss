@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html><head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css">
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
-<script type="text/javascript" src="includes/Mavrin-maskInput-d635fb9/jquery.numberMask.js"></script>
+<script type="text/javascript" src="includes/jquery-4/jquery.numbox-1.1.0.min.js"></script>
+<link href="includes/jquery-4/jquery.numbox-1.1.0.css" rel="stylesheet" type="text/css">
 <style type="text/css">
 #pageOne .ui-content .ui-btn.ui-btn-inline.ui-corner-all.ui-shadow {
 	position: absolute;
@@ -20,7 +20,7 @@ div.ui-input-text {
 	width: 120px !important;
 }
 </style>
-<link href="includes/jquery-4/jquery.numbox-1.1.0.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
 <div data-role="page" id="pageOne" >
@@ -41,8 +41,7 @@ div.ui-input-text {
   <div data-role="controlgroup" data-type="horizontal" align="center"><a href="#pageOne" data-role="button">Home</a><a href="#" data-role="button">Button</a><a href="#" data-role="button">Button</a></div>
   <script type="text/javascript">
   $(document).ready(function(e) {
- 
-
+ 	
 	var risk;
 	var balance;
 	
@@ -55,10 +54,10 @@ div.ui-input-text {
 	
 		$("#btnCalculate").click(function()
 		{
-			buyPrice=$("#txtBuyPrice").text();
-		buyPrice=Number(buyPrice);
-		
-		alert (buyPrice);
+		  
+
+			
+		alert (balance)
 			
 		}
 			
@@ -66,18 +65,15 @@ div.ui-input-text {
 		);
 	});
 	
-$(document).ready(function(){
-  $("#txtBalance").focus(function(){
-	  $("#txtBalance").numberMask({type:'float',afterPoint:4,defaultValueInput:'0.00',decimalMark:'.'});
-    
-  });
-});
+
+  
+
 
 	
 	</script>
     
   <div align="center">
-    <input type="tel" id="txtBalance"   pattern="[0-9.]" placeholder="Acc Balance" name="txtBalance"/>
+    <input type="tel"  step="0.01" id="txtBalance" placeholder="Acc Balance" name="txtBalance"/>
   </div>
   <div class="ui-grid-a">
     <div class="ui-block-a" align="right" style="padding-right:15px"> <br>
@@ -98,13 +94,13 @@ $(document).ready(function(){
     <div class="ui-block-b"> <br>
       <label id="lblRisk">$ 000,00</label>
       <br>
-      <input type="number" id="txtBuyPrice">
+      <input type="tel" id="txtBuyPrice">
       </label>
-      <input type="number" id="txtStopLoss">
+      <input type="tel" id="txtStopLoss">
       </label>
       <br>
       <label id="lblSharesToBuy">stb</label>
-      <input type="number" id="txtSellPrice">
+      <input type="tel" id="txtSellPrice">
       </label>
       <br>
       <label id="lblResult" ></label>
